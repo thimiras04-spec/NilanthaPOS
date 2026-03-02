@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nilantha Iron Workers POS</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- App Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <img src="images/logo.png" alt="Logo" class="logo">
+            <h1>Nilantha Iron Workers</h1>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <!-- Section 1 & 2: Client Info -->
+        <section class="card" id="section-client-info">
+            <div class="form-group">
+                <label for="clientName"><i class="fas fa-user"></i> කරපු වැඩේ</label>
+                <input type="text" id="clientName" placeholder="Enter client name" autocomplete="off">
+            </div>
+            
+            <div class="form-group flex-row">
+                <div class="input-wrapper">
+                    <label for="workDateTime"><i class="fas fa-calendar-alt"></i> දිනය සහ වෙලාව</label>
+                    <input type="text" id="workDateTime" readonly>
+                </div>
+                <button type="button" class="btn-primary btn-icon" id="btnUnlockGoods" title="Proceed to Goods">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Section 3: Goods and Cost (Locked initially) -->
+        <section class="card locked" id="section-goods">
+            <div class="card-header">
+                <h2><i class="fas fa-hammer"></i> ද්‍රව්‍ය හා වියදම්</h2>
+            </div>
+            
+            <div id="goodsList">
+                <!-- Dynamic goods items will be appended here -->
+                <div class="good-item">
+                    <div class="form-group flex-2">
+                        <label>ද්‍රව්‍ය</label>
+                        <input type="text" class="good-name" placeholder="උදා: යකඩ බට,තීන්ත,වෑල්ඩින් කූරු">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>වියදම (LKR)</label>
+                        <input type="number" inputmode="decimal" class="good-cost" placeholder="0.00">
+                    </div>
+                </div>
+            </div>
+
+            <div class="goods-actions">
+                <button type="button" class="btn-secondary" id="btnAddGood">
+                    <i class="fas fa-plus"></i> Add Item
+                </button>
+            </div>
+
+            <div class="total-cost-display">
+                <span>මුලු වියදම:</span>
+                <span id="totalCostDisplay">Rs. 0.00</span>
+            </div>
+        </section>
+
+        <!-- Section 4: Pricing and Profit (Locked initially) -->
+        <section class="card locked" id="section-pricing">
+            <div class="card-header">
+                <h2><i class="fas fa-wallet"></i> මිල ගනන් සහ ලාභය</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="myPrice">ගත යුතු මුදල (LKR)</label>
+                <input type="number" inputmode="decimal" id="myPrice" placeholder="Enter your selling price">
+            </div>
+
+            <div class="profit-display">
+                <span>ලබන ලාභය:</span>
+                <span id="profitDisplay" class="neutral">Rs. 0.00</span>
+            </div>
+
+            <button type="button" class="btn-primary btn-large" id="btnSaveRecord">
+                <i class="fas fa-save"></i> Save Record
+            </button>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation for Reports -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" id="navHome">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-item" id="navReports">
+            <i class="fas fa-chart-line"></i>
+            <span>Reports</span>
+        </button>
+    </nav>
+
+    <!-- Reports Modal -->
+    <div id="reportsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-pdf"></i> ලාභය සම්බන්ධ තොරතුරු</h2>
+                <button class="close-modal" id="btnCloseReports"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="report-actions">
+                    <button class="btn-report" id="btnCurrentReport">
+                        <i class="fas fa-file-export"></i> අද දවසේ දැනට ලාභය
+                    </button>
+                    <button class="btn-report" id="btnWeeklyReport">
+                        <i class="fas fa-calendar-week"></i> මේ සතියේ ලාභය
+                    </button>
+                    <button class="btn-report" id="btnMonthlyReport">
+                        <i class="fas fa-calendar-alt"></i> මේ මාසයේ ලාභය
+                    </button>
+                    <div class="annual-report-group" style="display: flex; gap: 10px; width: 100%; margin-bottom: 24px;">
+                        <select id="annualReportYear" class="form-control" style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-family: 'Inter', sans-serif; font-size: 1rem; color: #1e293b; background-color: #f8fafc; cursor: pointer;">
+                        </select>
+                        <button class="btn-report" id="btnAnnualReport" style="margin-bottom: 0; flex: 2;">
+                            <i class="fas fa-chart-pie"></i> වාර්ෂික වාර්තාව
+                        </button>
+                    </div>
+                    <button class="btn-report btn-danger" id="btnClearData">
+                        <i class="fas fa-trash"></i> සියල්ල මකා දමන්න
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden table for PDF generation -->
+    <div id="pdfContainer" style="display: none;">
+        <div id="pdfContent">
+            <div class="pdf-header">
+                <h2>Nilantha Iron Workers - ආදායම් සටහන</h2>
+                <p id="pdfDateRange"></p>
+            </div>
+            <table class="pdf-table">
+                <thead>
+                    <tr>
+                        <th>දිනය</th>
+                        <th>කරපු වැඩ</th>
+                        <th>මුලු වියදම (LKR)</th>
+                        <th>අය කල ගාස්තුව (LKR)</th>
+                        <th>ලාභය (LKR)</th>
+                    </tr>
+                </thead>
+                <tbody id="pdfTableBody">
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4" style="text-align:right">මුලු ලාභය:</th>
+                        <th id="pdfTotalProfit">0.00</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="js/pdf_generator.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
