@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nilantha Iron Workers POS</title>
@@ -175,7 +175,7 @@
     <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('./sw.js')
       .then(function () {
         console.log('Service Worker Registered');
       })
@@ -187,5 +187,6 @@ if ('serviceWorker' in navigator) {
 </script>
 </body>
 </html>
+
 
 
