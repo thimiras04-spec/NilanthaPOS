@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.thimiras04_spec.twa",
+        "sha256_cert_fingerprints": ["A6:CA:F0:D7:B7:4A:3D:E7:91:07:4E:FB:67:8F:6E:10:0A:81:22:BE:66:0A:82:3A:5E:F3:28:EA:F3:80:C3:CE"]
+      }
+    }]
