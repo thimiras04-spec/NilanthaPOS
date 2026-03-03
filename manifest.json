@@ -1,6 +1,6 @@
 {
-  "name": "Offline Forever App",
-  "short_name": "OfflineApp",
+  "name": "NIW POS app",
+  "short_name": "POS-App",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
